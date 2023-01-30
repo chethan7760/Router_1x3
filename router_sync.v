@@ -22,11 +22,6 @@ begin
 		
 end
 
-always@(write_enb_reg)
-begin
-if(!write_enb_reg)
-write_enb = 3'b000;
-end
 
 //write enable logic
 always@(*)
