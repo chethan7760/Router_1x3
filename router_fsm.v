@@ -55,9 +55,7 @@ begin
 				end
 
 		LOAD_FIRST_DATA :
-				//	begin 
 				 next_state = LOAD_DATA;
-					//end
 
 		LOAD_DATA : begin 
 			if(fifo_full)
@@ -87,19 +85,15 @@ begin
 			next_state = DECODE_ADDRESS;
 			end
 
-		LOAD_PARITY : 
-			//	begin
+		LOAD_PARITY : 		
 			next_state = CHECK_PARITY_ERROR;
-		//	end
-			
+		
 		CHECK_PARITY_ERROR : begin
 				if(fifo_full)
 			next_state = FIFO_FULL_STATE;
 		else 
 			if(!fifo_full)
 			next_state = DECODE_ADDRESS;
-		//else 
-		//	next_state = CHECK_PARITY_ERROR;
 			end
 
 		WAIT_TILL_EMPTY :	

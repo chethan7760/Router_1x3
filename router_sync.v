@@ -28,11 +28,9 @@ if(!write_enb_reg)
 write_enb = 3'b000;
 end
 
-
 //write enable logic
 always@(*)
 begin
-	//write_enb = 3'b000;
 	if(write_enb_reg)
 		case(int_addr_reg)
 			2'b00 : write_enb = 3'b001;

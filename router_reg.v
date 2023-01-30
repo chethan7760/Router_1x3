@@ -97,11 +97,3 @@ end
 
  end
  endmodule
-
-
-
-/* else
- begin
- if(ld_state && !pkt_valid)
- packet_parity <= data_in;
- end*/

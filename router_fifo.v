@@ -18,32 +18,27 @@ begin
 		temp_lfd<=lfd_state;
 end
 
-//pointer logic
+//write pointer logic
 always@(posedge clk)
 begin
 	if(!resetn || soft_reset)
-		{write_ptr,read_ptr} <= 0;
-	else if(write_enb && !full)
-			write_ptr <= write_ptr + 1'b1;
-	else
-		if(read_enb && !empty)
-			read_ptr <= read_ptr + 1'b1;
+		write_ptr <= 0;
+	else 
+		if(write_enb && !full)
+		write_ptr <= write_ptr + 1'b1;
+	
 
 end
 
-/*
-//counter logic
-		always@(posedge clk)
-		begin
-		if(!resetn || soft_reset)
-		fifo_counter <= 0;
-		else if(mem[read_ptr[3:0]][8] == 1'b1)
-		fifo_counter <= mem[read_ptr[3:0]][7:2]+1'b1;
-		else 
-			if(fifo_counter != 0)
-			fifo_counter <= fifo_counter - 1'b1;
-		end
-*/
+//read pointer logic
+always@(posedge clk)
+begin
+	if(!resetn || soft_reset)
+		read_ptr <= 0;
+	else		
+		if(read_enb && !empty)
+		read_ptr <= read_ptr + 1'b1;
+end
 
 //counter logic
 		always@(posedge clk)
@@ -57,7 +52,6 @@ end
 			fifo_counter <= fifo_counter - 1'b1;
 		end
 
-	
 //write logic
 		always@(posedge clk)
 		begin
@@ -73,7 +67,6 @@ end
 					
 end
 
-
 //read logic
 			always@(posedge clk)
 				begin
@@ -85,8 +78,7 @@ end
 						data_out <= 8'hz;
 					else
 						if(read_enb && !empty)
-						data_out <= mem[read_ptr[3:0]];
-					
+						data_out <= mem[read_ptr[3:0]];	
 				end
 
 
