@@ -28,6 +28,14 @@ task rst;
                 end
         endtask
 
+task read;
+begin
+wait(vld_out_0)
+@(negedge clk)
+#250 read_enb_0 = 1;
+end
+endtask
+
 
 task read_0;
 begin
@@ -70,6 +78,16 @@ parity = parity ^ header;
 for(i=0;i<payload_length;i=i+1)
 begin
 @(negedge clk)
+if(busy == 0)
+begin
+pay_load = {$random}%256;
+data_in = pay_load;
+parity = parity^data_in;
+end
+
+else
+wait(!busy)
+@(negedge clk)
 pay_load = {$random}%256;
 data_in = pay_load;
 parity = parity^data_in;
@@ -105,6 +123,16 @@ parity = parity ^ header;
 
 for(i=0;i<payload_length;i=i+1)
 begin
+@(negedge clk)
+if(busy == 0)
+begin
+pay_load = {$random}%256;
+data_in = pay_load;
+parity = parity^data_in;
+end
+
+else
+wait(!busy)
 @(negedge clk)
 pay_load = {$random}%256;
 data_in = pay_load;
@@ -142,6 +170,16 @@ parity = parity ^ header;
 for(i=0;i<payload_length;i=i+1)
 begin
 @(negedge clk)
+if(busy == 0)
+begin
+pay_load = {$random}%256;
+data_in = pay_load;
+parity = parity^data_in;
+end
+
+else
+wait(!busy)
+@(negedge clk)
 pay_load = {$random}%256;
 data_in = pay_load;
 parity = parity^data_in;
@@ -176,7 +214,8 @@ fork
 packet_25;
 read_2;
 join
-#200;
+#400;
+
 $finish;
 end
 

@@ -27,6 +27,7 @@ end
 always@(*)
 begin
 	if(write_enb_reg)
+	begin
 		case(int_addr_reg)
 			2'b00 : write_enb = 3'b001;
 			2'b01 : write_enb = 3'b010;
@@ -34,6 +35,10 @@ begin
 			default : write_enb = 3'b000;
 		endcase 
 	end
+	else 
+	if(!write_enb_reg)
+	write_enb = 3'b000;
+end
 
 //fifo_full logic
 always@(*)
